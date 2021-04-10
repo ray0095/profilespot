@@ -6,10 +6,14 @@ const Intern = require('./lib/Intern');
 const fs = require('fs');
 const inquirer = require('inquirer');
 var path = require('path');
+const managerquestions = require('./src/manager-questions');
+const engineerquestions = require('./src/engineer-question');
+const internquestions = require('./src/intern-questions');
+const options = require('./src/options');
 
 // use path module to define the path to the output directory ????????????
-const OUTPUT_DIR = path.resolve(__dirname, "output")
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+// const OUTPUT_DIR = path.resolve(__dirname, "output")
+// const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 // create an array to hold all of our team members
 let team = [];
@@ -17,132 +21,70 @@ let team = [];
 // init function
 function init() {
 	// function to create a Manager
-	function manager() { 
-		return inquirer
-		// prompt user with questions needed to satisfy the input for a manager object
-		.prompt([
-			{
-				type: 'input',
-				message: 'What is your full name?',
-				name: 'name',
-				},
-				{
-				type: 'input',
-				message: 'What is your employee ID?',
-				name: 'id',
-				},
-				{
-				type: 'input',
-				message: 'What is your email?',
-				name: 'email',
-				},
-				{
-				type: 'input',
-				message: 'What is your office number?',
-				name: 'officeNum',
-				},
-		])
-		// .then statement ????????
-		.then(new Manager(response.name, response.id, response.email, response.officeNum)) => {
-			team.push(Manager);
-		  });
-			// create a new instance of the Manager class
-			// push the new manager object to the team members array
-	
-			// call the function to create the rest of the team
-		team();
+	function managerFunc() {
+		// prompt user with questions needed to satisfy the input for a manager object 
+		inquirer.prompt(managerquestions).then((managerInput) => {
+			let manager = new Manager(
+				managerInput.name, 
+				managerInput.id, 
+				managerInput.email, 
+				managerInput.officeNum
+				);
+			team.push(manager);
+			console.log(team);
+			employee()
+		});
+		
 	}
-  
-	// function to create the rest of the team
-	function team() {
-		// prompt user to select which type of employee they would like to add
-		.prompt([
-			{
-				type: 'input',
-				message: 'What type of employee would you like to add?',
-				name: 'employee type',
-				choices: ['Engineer', 'Intern', 'Finish Team'],
-				},])
 
-		.then(
-			if (response.choices === 'Engineer'){
-				engineer();
-			} else if (response.choices === 'Intern'){
-				intern();
-			} else {
-				output();
-			}
-		)
-		// options include engineer, intern, or an option to not add any more team members
-		// .then statement
-			// if a type of employee was selected, call function to add that type of employee
-			// if the other option was selected, call the function to create the output
+	function employee() {
+		inquirer.prompt(options).then((answer) => {
+		  if (answer.what == "Engineer") {
+			engineerFunc();
+		  } else if (answer.what == "Intern") {
+			internFunc();
+		  } else {
+			
+			console.log("create team")
+		  }
+		});
+	  }
+
+	function engineerFunc() {
+		console.log("engineer sucess");
+		inquirer.prompt(engineerquestions).then((engineerInput) => {
+			let engineer = new Engineer(
+				engineerInput.name, 
+				engineerInput.id, 
+				engineerInput.email, 
+				engineerInput.gitHub
+				);
+			team.push(engineer);
+			console.log(team);
+			employee()
+		});
 	}
-	
-	// function to add an engineer
-	function engineer() {
-		.prompt([
-			{
-				type: 'input',
-				message: 'What is your full name?',
-				name: 'name',
-				},
-				{
-				type: 'input',
-				message: 'What is your employee ID?',
-				name: 'id',
-				},
-				{
-				type: 'input',
-				message: 'What is your email?',
-				name: 'email',
-				},
-				{
-				type: 'input',
-				message: 'What is your github profile link?',
-				name: 'gitHub',
-				},
-		])
 
-	};
-		// same idea as create manager
-  
-	// function to add an intern
-	function intern() {
-		.prompt([
-			{
-				type: 'input',
-				message: 'What is your full name?',
-				name: 'name',
-				},
-				{
-				type: 'input',
-				message: 'What is your employee ID?',
-				name: 'id',
-				},
-				{
-				type: 'input',
-				message: 'What is your email?',
-				name: 'email',
-				},
-				{
-				type: 'input',
-				message: 'What is your school?',
-				name: 'school',
-				},
-		])
-
+	function internFunc() {
+		console.log("intern sucess");
+		inquirer.prompt(internquestions).then((internInput) => {
+			let intern = new Intern(
+				internInput.name, 
+				internInput.id, 
+				internInput.email, 
+				internInput.officeNum
+				);
+			team.push(intern);
+			console.log(team);
+			employee()
+		});
 	}
-		// same idea as create manager
 
-	// function to create the output
-	function output() {
-
+	function createTeam() {
+		//generate html
 	}
-		// call the function from page-template module and pass in the team members array and save to a data variable
-		// use fs module to write the a file -> pass in the fs.write(outputPath, the data, and "utf-8")
 
-  manager();
+  managerFunc();
 
 }
 
