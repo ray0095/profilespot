@@ -45,12 +45,10 @@ function init() {
 			console.log(team)
 			function createCards(team) {
 				forEach(
-					if (role === "Manager"){
-						console.log("test")
-					}
+					
 				)
 			}
-			createCards();
+			
 		  }
 		});
 	  }

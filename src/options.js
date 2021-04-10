@@ -2,7 +2,7 @@ module.exports = [
     {
       type: "list",
       name: "what",
-      message: "What would you like to do?",
+      message: "Which team member would you like to add to your team?",
       choices: ["Engineer", "Intern", "Finish"],
     },
   ];
