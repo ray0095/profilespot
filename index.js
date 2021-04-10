@@ -11,9 +11,7 @@ const engineerquestions = require('./src/engineer-question');
 const internquestions = require('./src/intern-questions');
 const options = require('./src/options');
 
-// use path module to define the path to the output directory ????????????
-// const OUTPUT_DIR = path.resolve(__dirname, "output")
-// const outputPath = path.join(OUTPUT_DIR, "team.html");
+
 
 // create an array to hold all of our team members
 let team = [];
@@ -44,8 +42,15 @@ function init() {
 		  } else if (answer.what == "Intern") {
 			internFunc();
 		  } else {
-			
-			console.log("create team")
+			console.log(team)
+			function createCards(team) {
+				forEach(
+					if (role === "Manager"){
+						console.log("test")
+					}
+				)
+			}
+			createCards();
 		  }
 		});
 	  }
@@ -80,9 +85,6 @@ function init() {
 		});
 	}
 
-	function createTeam() {
-		//generate html
-	}
 
   managerFunc();
 

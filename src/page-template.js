@@ -1,4 +1,10 @@
 // createTeam function -> accepts team
+const fs = require("fs");
+
+function createTeam(team) {
+	console.log(team)
+
+}
 
 	// createManager function -> accepts a Manager object -< returns the HTML template string for a manager card
 
@@ -18,4 +24,4 @@
 	// doctyp, html, head, body, basic body structure (header, main)
 	// call createTeam(team) function in the proper place
 
-// export this last function
+module.exports = createTeam;
